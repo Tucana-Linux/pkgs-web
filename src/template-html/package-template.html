@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>pkgname-1.1.0-0</title>
+    <title>{{ name }}-{{ version }}</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="css/styles.css" />
   </head>
@@ -29,15 +29,15 @@
           <div class="border border-dark text-center py-1">pkgname</div>
 
           <div class="border border-dark bg-dark-primary p-2 space-y-1">
-            <p><strong>Version:</strong> 1.1.0-0</p>
-            <p><strong>Download Size:</strong> 536 KB</p>
-            <p><strong>Installed Size:</strong> 1.1 MB</p>
+            <p><strong>Version:</strong> {{ version }}</p>
+            <p><strong>Download Size:</strong>{{ download_size }}</p>
+            <p><strong>Installed Size:</strong> {{ install_size }}</p>
             <p>
               <strong>Upstream Download:</strong>
               <a href="#" class="text-blue-400 underline">Link</a>
             </p>
             <p><strong>Last Commit:</strong> 11-12-2024</p>
-            <p><strong>Last Rebuilt:</strong> 01-24-2025</p>
+            <p><strong>Last Rebuilt:</strong> {{ last_update }}</p>
             <p><strong>Source</strong> 01-24-2025</p>
             <p><strong>Build Log</strong> 01-24-2025</p>
           </div>
@@ -54,13 +54,15 @@
             </div>
             <div class="p-2 overflow-auto flex-1">
               <ul>
+              {{ % for package_name in depends % }}
                 <li>
                   <a
                     class="text-blue-400 hover:underline"
-                    href="https://google.com/"
-                    >nodejs</a
+                    href="/packages/{{ package_name }}"
+                    >{{ package_name }}</a
                   >
                 </li>
+              {{ % endfor % }}
               </ul>
             </div>
           </div>
@@ -74,13 +76,15 @@
             </div>
             <div class="p-2 overflow-auto flex-1">
               <ul>
+              {{ % for package in reverse_depends % }}
                 <li>
                   <a
                     class="text-blue-400 hover:underline"
-                    href="https://google.com/"
-                    >nodejs</a
+                    href="/packages/{{ package }}"
+                    >{{ package }}</a
                   >
                 </li>
+              {{ % endfor % }}
               </ul>
             </div>
           </div>
@@ -92,7 +96,12 @@
           >
             Files
           </div>
-          <div class="flex-1 p-2 overflow-auto"></div>
+          <div class="flex-1 p-2 overflow-auto">
+          {{ % for file in files % }}
+            <p>{{file}}</p>
+          {{ % endfor % }}
+
+          </div>
         </div>
       </div>
     </div>
