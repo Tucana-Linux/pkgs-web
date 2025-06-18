@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+.bg-dark-primary {
+  background-color: #24262a;
+}
+.bg-dark-secondary {
+  background-color: #2a2e32;
+}
+.border-dark {
+  border-color: #3f3f3f;
+}
+.text-dark {
+  color: #e0e0e0;
+}
+
+.bg-light-primary {
+  background-color: #f5f5f5;
+}
+.bg-light-secondary {
+  background-color: #efefef;
+}
+.border-light {
+  border-color: #d1d1d1;
+}
+.text-light {
+  color: #333333;
+}

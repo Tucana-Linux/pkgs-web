@@ -1,0 +1,64 @@
+<html>
+  <head>
+    <title>Tucana Linux Package Search</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body class="h-screen bg-dark-primary flex flex-col">
+    <nav
+      class="bg-dark-secondary px-4 pt-2 pb-2 text-dark flex justify-between items-center border-b border-dark"
+    >
+      <div class="text-left text-xl font-semibold">Tucana Linux</div>
+
+      <div
+        class="relative text-right text-sm p-2 bg-dark-primary text-gray-400 shadow-2xl border-b border-dark border-1"
+      >
+        <input id="search" type="text" , placeholder="Search Packages" />
+      </div>
+    </nav>
+    <div class="w-full h-full p-11 text-dark flex flex-col gap-4">
+      <p>Recently Updated</p>
+
+      <div
+        class="bg-dark-secondary w-full h-full overflow-auto text-xs border-dark"
+      >
+        <div
+          class="grid md:grid-cols-3 p-4 font-bold border-b border-dark-primary sticky top-0 bg-dark-secondary"
+        >
+          <span>Package Name</span>
+          <span class="text-center">Version</span>
+          <span class="text-right">Last Updated</span>
+        </div>
+
+        <ul class="divide-y">
+          <li class="odd:bg-dark-primary even:bg-zinc-800 border-dark p-4">
+            <div class="grid grid-cols-3">
+              <span
+                ><a
+                  href="https://google.com"
+                  class="text-blue-400 hover:underline"
+                  >firefox</a
+                ></span
+              >
+              <span class="text-center">126.0.1</span>
+              <span class="text-right">01-24-2025</span>
+            </div>
+          </li>
+          <li class="odd:bg-dark-primary even:bg-zinc-800 border-dark p-4">
+            <div class="grid grid-cols-3">
+              <span
+                ><a
+                  href="https://google.com"
+                  class="text-blue-400 hover:underline"
+                  >gimp</a
+                ></span
+              >
+              <span class="text-center">3.0.14</span>
+              <span class="text-right">01-24-2025</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>
