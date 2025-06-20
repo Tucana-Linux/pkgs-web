@@ -31,7 +31,7 @@
         </div>
 
         <ul class="divide-y">
-          { % for pkg in latest_packages % }
+          {% for pkg in latest_packages %}
           <li class="odd:bg-dark-primary even:bg-zinc-800 border-dark p-4">
             <div class="grid grid-cols-3">
               <span
@@ -45,6 +45,7 @@
               <span class="text-right">{{ pkg.last_update }}</span>
             </div>
           </li>
+          {% endfor %}
         </ul>
       </div>
     </div>

@@ -140,7 +140,7 @@ class WebRepository:
 
             if not os.path.exists(".git"):
                 logging.error("Not a git repository!")
-                raise FileNotFoundError
+                raise AttributeError
 
             commit_output = subprocess.run(f"git log -1 --format=%ct -- {build_script_location}", shell=True, capture_output=True, text=True, cwd=self._build_script_path).stdout.strip()
 

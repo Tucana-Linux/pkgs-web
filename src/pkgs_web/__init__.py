@@ -19,6 +19,10 @@ repo.packages_to_web_packages()
 
 generator: WebGenerator = WebGenerator(repository=repo, output_dir=args.output)
 
+generator.prepare_www()
+generator.generate_package_pages()
+generator.generate_home_page(100)
+
 
 
 

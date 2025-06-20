@@ -3,7 +3,7 @@
   <head>
     <title>{{ name }}-{{ version }}</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="../css/styles.css" />
   </head>
   <body class="h-screen flex flex-col bg-dark-primary">
     <nav
@@ -26,7 +26,9 @@
         <div
           class="flex flex-col gap-4 border border-dark bg-dark-secondary p-4"
         >
-          <div class="border border-dark text-center py-1">pkgname</div>
+          <div class="border border-dark text-center py-1">
+            {{ package_name }}
+          </div>
 
           <div class="border border-dark bg-dark-primary p-2 space-y-1">
             <p><strong>Version:</strong> {{ version }}</p>
@@ -54,7 +56,7 @@
             </div>
             <div class="p-2 overflow-auto flex-1">
               <ul>
-              { % for package_name in depends % }
+                {% for package_name in depends %}
                 <li>
                   <a
                     class="text-blue-400 hover:underline"
@@ -62,7 +64,7 @@
                     >{{ package_name }}</a
                   >
                 </li>
-              { % endfor % }
+                {% endfor %}
               </ul>
             </div>
           </div>
@@ -76,7 +78,7 @@
             </div>
             <div class="p-2 overflow-auto flex-1">
               <ul>
-              {{ % for package in reverse_depends % }}
+                {% for package in reverse_depends %}
                 <li>
                   <a
                     class="text-blue-400 hover:underline"
@@ -84,7 +86,7 @@
                     >{{ package }}</a
                   >
                 </li>
-              {{ % endfor % }}
+                {% endfor %}
               </ul>
             </div>
           </div>
@@ -97,10 +99,9 @@
             Files
           </div>
           <div class="flex-1 p-2 overflow-auto">
-          <!--{ % for file in files % }
+            <!--{ % for file in files % }
             <p>{{file}}</p>
           { % endfor % } -->
-
           </div>
         </div>
       </div>
