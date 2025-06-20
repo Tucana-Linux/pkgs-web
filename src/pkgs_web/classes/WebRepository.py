@@ -12,7 +12,7 @@ from neptune.classes.Package import Package
 import requests
 import yaml
 
-from classes.WebPackage import WebPackage
+from pkgs_web.classes.WebPackage import WebPackage
 
 """
 This is used to read any neptune repository

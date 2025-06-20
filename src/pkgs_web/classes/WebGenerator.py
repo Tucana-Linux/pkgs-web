@@ -2,8 +2,8 @@ from dataclasses import asdict
 import os
 from jinja2 import Environment, FileSystemLoader, Template
 
-from classes.WebPackage import WebPackage
-from classes.WebRepository import WebRepository
+from pkgs_web.classes.WebPackage import WebPackage
+from pkgs_web.classes.WebRepository import WebRepository
 
 class WebGenerator:
     """
@@ -31,6 +31,9 @@ class WebGenerator:
 
 
     def generate_home_page(self, numLatestPackages: int):
+        """
+        Generate the home page from HTML
+        """
         # not sorted :(
         latest_packages : list[WebPackage] = sorted(self._repository.packages.values(), key=lambda pkg: pkg.last_update, reverse=True)[:numLatestPackages] 
         template : Template = self._environment.get_template("front-page.html")
