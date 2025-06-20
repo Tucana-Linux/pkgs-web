@@ -1,0 +1,54 @@
+from dataclasses import asdict
+import os
+from jinja2 import Environment, FileSystemLoader, Template
+
+from classes.WebPackage import WebPackage
+from classes.WebRepository import WebRepository
+
+class WebGenerator:
+    """
+    Generates all the HTML from templates
+    """
+    def __init__(self, output_dir : str, repository: WebRepository) -> None:
+        self._repository = repository
+        os.mkdir(f"{output_dir}/www")
+        self._www_dir = f"{output_dir}/www"
+        self._environment : Environment = Environment(loader=FileSystemLoader("template-html/"))
+        
+    def generate_package_pages(self) -> None:
+        """
+        Generates the package html from the templates 
+        Precondition: repository is fully initalized 
+        with repo.packages available
+        """
+        package_template : Template = self._environment.get_template("package-template.html")
+        for package_name, package in self._repository.packages.items():
+            content : str = package_template.render(**asdict(package), package_name=package_name)
+            with open(f"{self._www_dir}/{package_name}.html", "w") as file:
+                file.write(content)
+                print(f"Generated template for {package_name}")
+
+
+
+    def generate_home_page(self, numLatestPackages: int):
+        # not sorted :(
+        latest_packages : list[WebPackage] = sorted(self._repository.packages.values(), key=lambda pkg: pkg.last_update, reverse=True)[:numLatestPackages] 
+        template : Template = self._environment.get_template("front-page.html")
+        content : str = template.render(latest_packages=latest_packages)
+        with open(f"{self._www_dir}/homepage.html") as file:
+            file.write(content)
+
+    #def copy_search_components(self):
+
+
+    
+
+
+
+        
+    
+    
+    
+    
+    
+    

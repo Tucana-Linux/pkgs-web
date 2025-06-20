@@ -54,7 +54,7 @@
             </div>
             <div class="p-2 overflow-auto flex-1">
               <ul>
-              {{ % for package_name in depends % }}
+              { % for package_name in depends % }
                 <li>
                   <a
                     class="text-blue-400 hover:underline"
@@ -62,7 +62,7 @@
                     >{{ package_name }}</a
                   >
                 </li>
-              {{ % endfor % }}
+              { % endfor % }
               </ul>
             </div>
           </div>
@@ -97,9 +97,9 @@
             Files
           </div>
           <div class="flex-1 p-2 overflow-auto">
-          {{ % for file in files % }}
+          <!--{ % for file in files % }
             <p>{{file}}</p>
-          {{ % endfor % }}
+          { % endfor % } -->
 
           </div>
         </div>

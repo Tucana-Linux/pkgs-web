@@ -31,30 +31,18 @@
         </div>
 
         <ul class="divide-y">
+          { % for pkg in latest_packages % }
           <li class="odd:bg-dark-primary even:bg-zinc-800 border-dark p-4">
             <div class="grid grid-cols-3">
               <span
                 ><a
-                  href="https://google.com"
+                  href="/{{ pkg.name }}.html"
                   class="text-blue-400 hover:underline"
-                  >firefox</a
+                  >{{ pkg.name }}</a
                 ></span
               >
-              <span class="text-center">126.0.1</span>
-              <span class="text-right">01-24-2025</span>
-            </div>
-          </li>
-          <li class="odd:bg-dark-primary even:bg-zinc-800 border-dark p-4">
-            <div class="grid grid-cols-3">
-              <span
-                ><a
-                  href="https://google.com"
-                  class="text-blue-400 hover:underline"
-                  >gimp</a
-                ></span
-              >
-              <span class="text-center">3.0.14</span>
-              <span class="text-right">01-24-2025</span>
+              <span class="text-center">{{ pkg.version }}</span>
+              <span class="text-right">{{ pkg.last_update }}</span>
             </div>
           </li>
         </ul>
