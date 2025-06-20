@@ -119,6 +119,7 @@ class WebRepository:
                 logging.error(f"Could not find build-script for {package_name}")
                 os.chdir(current_dir)
                 raise FileNotFoundError
+            
             os.chdir(current_dir)
             return build_script
 
@@ -137,7 +138,7 @@ class WebRepository:
             current_dir = os.getcwd()
             os.chdir(self._build_script_path)
 
-            if not os.path.isdir(".git"):
+            if not os.path.exists(".git"):
                 logging.error("Not a git repository!")
                 raise FileNotFoundError
 
@@ -165,10 +166,16 @@ class WebRepository:
             # To find build-script
             # Method 1 -- Basic Find -- find . -type f -name package_name
             # Method 2 -- Find Split Package -- grep -rE '.*PACKAGE.*=package_name' | sed 's/:.*//g'
-            build_script_location = find_build_script(package_name)
-            package_build_info : Tuple[int, str] = extract_build_script_info(build_script_location)
-            last_commit = package_build_info[0]
-            source_url = package_build_info[1]
+            try:
+                build_script_location = find_build_script(package_name)
+                package_build_info : Tuple[int, str] = extract_build_script_info(build_script_location)
+                last_commit = package_build_info[0]
+                source_url = package_build_info[1]
+            except FileNotFoundError as e:
+                logging.warning(f"Could not find build script for {package}")
+                build_script_location = ""
+                last_commit = 1
+                source_url = "Ancient Package"
             reverse_depends = find_reverse_depends(package_name)
 
             self._web_packages[package_name] = WebPackage.create_from_package(package, last_commit=last_commit, source_url=source_url, build_script_location=build_script_location, reverse_depends=reverse_depends)
