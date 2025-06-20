@@ -106,15 +106,20 @@ class WebRepository:
 
         def find_build_script(package_name : str) -> str:
             """
-            Take package name and output the relative path to the build script 
+            Take package name and output the path to the build script relative
+            to the build script directory
             """
+            current_dir = os.curdir
+            os.chdir(self._build_script_path)
             build_script : str = ""
             build_script = subprocess.run(f"find . -type f -name {package_name}", shell=True, capture_output=True, text=True).stdout.strip()
             if not build_script:
                 build_script = subprocess.run(f"grep -rE '.*PACKAGE.*={package_name}' | sed 's/:.*//g' | head -1", capture_output=True, text=True, shell=True).stdout.strip()
             if not build_script:
-                logging.error("Could not find build-script")
+                logging.error(f"Could not find build-script for {package_name}")
+                os.chdir(current_dir)
                 raise FileNotFoundError
+            os.chdir(current_dir)
             return build_script
 
         def extract_build_script_info(build_script_location: str) -> Tuple[int, str]:
@@ -129,7 +134,8 @@ class WebRepository:
             # TODO this is incredibly stupid and insecure, add metadata to neptune for the next update
             source_url_command = f"""bash -c 'eval "$(head -n "$(grep -n '^URL=' {build_script_location}| head -1 | cut -d: -f1)" {build_script_location})" && echo "$URL"'"""
             source_url : str = subprocess.run(source_url_command, shell=True, capture_output=True, text=True).stdout.strip()
-
+            current_dir = os.curdir
+            os.chdir(self._build_script_path)
 
             if not os.path.isdir(".git"):
                 logging.error("Not a git repository!")
@@ -138,9 +144,11 @@ class WebRepository:
             commit_output = subprocess.run(f"git log -1 --format=%ct -- {build_script_location}", shell=True, capture_output=True, text=True, cwd=self._build_script_path).stdout.strip()
 
             if not commit_output:
+                os.chdir(current_dir)
                 raise RuntimeError(f"Could not get git commit history for {build_script_location}")
 
             last_commit : int = int(commit_output)
+            os.chdir(current_dir)
             
             return (last_commit, source_url)
 
