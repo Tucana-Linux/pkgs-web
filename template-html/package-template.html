@@ -36,12 +36,17 @@
             <p><strong>Installed Size:</strong> {{ install_size }}</p>
             <p>
               <strong>Upstream Download:</strong>
-              <a href="#" class="text-blue-400 underline">Link</a>
+              <a href="{{ url }}" class="text-blue-400 underline">Link</a>
             </p>
-            <p><strong>Last Commit:</strong> 11-12-2024</p>
+            <p><strong>Last Commit:</strong> {{ last_commit }}</p>
             <p><strong>Last Rebuilt:</strong> {{ last_update }}</p>
-            <p><strong>Source</strong> 01-24-2025</p>
-            <p><strong>Build Log</strong> 01-24-2025</p>
+            <p>
+              <a
+                href="https://github.com/Tucana-Linux/Build-Scripts/{{ build_script_location }}"
+                >Source Files</a
+              >
+              <!--<p><strong>Build Log</strong> 01-24-2025</p>-->
+            </p>
           </div>
         </div>
         <div class="flex flex-col gap-4 h-full min-h-0">

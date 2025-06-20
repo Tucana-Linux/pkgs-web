@@ -1,4 +1,5 @@
 from dataclasses import asdict
+import datetime
 import os
 from pathlib import Path
 import shutil
@@ -24,6 +25,16 @@ class WebGenerator:
         """
         shutil.copytree("template-html/css", f"{self._www_dir}/css", dirs_exist_ok=True)
         
+    def format_size(kb : int) -> str:
+        """
+        Used for install_size and download_size
+        to convert to useable units
+        """
+        size = kb * 1024  # Convert KB to bytes
+        for unit in ['B', 'KB', 'MB', 'GB', 'TB']:
+            if size < 1024:
+                return f"{size:.2f} {unit}"
+        
         
     def generate_package_pages(self) -> None:
         """
@@ -34,7 +45,13 @@ class WebGenerator:
         package_template : Template = self._environment.get_template("package-template.html")
         for package_name, package in self._repository.packages.items():
             package_dict = asdict(package)
+            package_dict["last_update"] = datetime.datetime.fromtimestamp(package["last_update"], tz=datetime.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+            package_dict["last_commit"] = datetime.datetime.fromtimestamp(package["last_commit"], tz=datetime.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+            package_dict["download_size"] = self.format_size(package_dict["download_size"])
+            package_dict["install_size"] = self.format_size(package_dict["install_size"])
+            
             content : str = package_template.render(
+            package_dict,
             package_name=package_name)
             with open(f"{self._packages_dir}/{package_name}.html", "w") as file:
                 file.write(content)
