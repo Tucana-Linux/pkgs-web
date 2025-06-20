@@ -25,7 +25,7 @@ class WebGenerator:
         """
         shutil.copytree("template-html/css", f"{self._www_dir}/css", dirs_exist_ok=True)
         
-    def format_size(kb : int) -> str:
+    def format_size(self, kb : int) -> str:
         """
         Used for install_size and download_size
         to convert to useable units
@@ -45,8 +45,8 @@ class WebGenerator:
         package_template : Template = self._environment.get_template("package-template.html")
         for package_name, package in self._repository.packages.items():
             package_dict = asdict(package)
-            package_dict["last_update"] = datetime.datetime.fromtimestamp(package["last_update"], tz=datetime.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
-            package_dict["last_commit"] = datetime.datetime.fromtimestamp(package["last_commit"], tz=datetime.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+            package_dict["last_update"] = datetime.datetime.fromtimestamp(package_dict["last_update"], tz=datetime.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+            package_dict["last_commit"] = datetime.datetime.fromtimestamp(package_dict["last_commit"], tz=datetime.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
             package_dict["download_size"] = self.format_size(package_dict["download_size"])
             package_dict["install_size"] = self.format_size(package_dict["install_size"])
             
