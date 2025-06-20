@@ -29,8 +29,8 @@ class WebRepository:
         self.name = name
         self._neptune_packages : dict[str, Package] = {}
         self._web_packages: dict[str, WebPackage] = {}
-        self._root_directory = os.curdir
-        self._build_script_path = os.path.join(os.curdir, "build-scripts")
+        self._root_directory = os.getcwd()
+        self._build_script_path = os.path.join(os.getcwd(), "build-scripts")
    
     def retrieve_packages(self) -> None:
         """
@@ -109,7 +109,7 @@ class WebRepository:
             Take package name and output the path to the build script relative
             to the build script directory
             """
-            current_dir = os.curdir
+            current_dir = os.getcwd()
             os.chdir(self._build_script_path)
             build_script : str = ""
             build_script = subprocess.run(f"find . -type f -name {package_name}", shell=True, capture_output=True, text=True).stdout.strip()
@@ -134,7 +134,7 @@ class WebRepository:
             # TODO this is incredibly stupid and insecure, add metadata to neptune for the next update
             source_url_command = f"""bash -c 'eval "$(head -n "$(grep -n '^URL=' {build_script_location}| head -1 | cut -d: -f1)" {build_script_location})" && echo "$URL"'"""
             source_url : str = subprocess.run(source_url_command, shell=True, capture_output=True, text=True).stdout.strip()
-            current_dir = os.curdir
+            current_dir = os.getcwd()
             os.chdir(self._build_script_path)
 
             if not os.path.isdir(".git"):
