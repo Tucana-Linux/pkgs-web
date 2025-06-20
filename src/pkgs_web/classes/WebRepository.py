@@ -60,7 +60,7 @@ class WebRepository:
                         version=package["version"],
                         download_size=int(package["download_size"]),
                         install_size=int(package["install_size"]),
-                        repo=package["repo"],
+                        repo=self.name,
                         last_update=int(package["last_update"]),
                         depends=package["depends"],
                         make_depends=package["make_depends"],
