@@ -68,7 +68,7 @@ class WebGenerator:
         latest_packages : list[WebPackage] = sorted(self._repository.packages.values(), key=lambda pkg: pkg.last_update, reverse=True)[:numLatestPackages] 
         template : Template = self._environment.get_template("front-page.html")
         content : str = template.render(latest_packages=latest_packages)
-        with open(f"{self._www_dir}/homepage.html", "w") as file:
+        with open(f"{self._www_dir}/index.html", "w") as file:
             file.write(content)
 
     #def copy_search_components(self):
