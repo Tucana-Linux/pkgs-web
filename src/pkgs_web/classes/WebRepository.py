@@ -172,7 +172,7 @@ class WebRepository:
                 last_commit = package_build_info[0]
                 source_url = package_build_info[1]
             except FileNotFoundError as e:
-                logging.warning(f"Could not find build script for {package}")
+                logging.warning(f"Could not find build script for {package_name}")
                 build_script_location = ""
                 last_commit = 1
                 source_url = "Ancient Package"

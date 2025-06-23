@@ -34,6 +34,7 @@ class WebGenerator:
         for unit in ['B', 'KB', 'MB', 'GB', 'TB']:
             if size < 1024:
                 return f"{size:.2f} {unit}"
+            size/=1024
         
         
     def generate_package_pages(self) -> None:
@@ -45,8 +46,8 @@ class WebGenerator:
         package_template : Template = self._environment.get_template("package-template.html")
         for package_name, package in self._repository.packages.items():
             package_dict = asdict(package)
-            package_dict["last_update"] = datetime.datetime.fromtimestamp(package_dict["last_update"], tz=datetime.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
-            package_dict["last_commit"] = datetime.datetime.fromtimestamp(package_dict["last_commit"], tz=datetime.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+            package_dict["last_update"] = datetime.datetime.fromtimestamp(package_dict["last_update"], tz=datetime.timezone.utc).strftime('%Y-%m-%d %H:%M')
+            package_dict["last_commit"] = datetime.datetime.fromtimestamp(package_dict["last_commit"], tz=datetime.timezone.utc).strftime('%Y-%m-%d %H:%M')
             package_dict["download_size"] = self.format_size(package_dict["download_size"])
             package_dict["install_size"] = self.format_size(package_dict["install_size"])
             
